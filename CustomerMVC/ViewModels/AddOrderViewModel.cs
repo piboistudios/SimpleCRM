@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using CustomerMVC.Data;
 using CustomerMVC.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+// We got a few parlour tricks going on here
 namespace CustomerMVC.ViewModels
 {
     public class AddOrderViewModel
@@ -44,11 +44,13 @@ namespace CustomerMVC.ViewModels
             orderProductIDs = new List<int>();
         }
 
-        // Constructor for passing view model to GET route and initializing product list.
+        // Constructor for passing view model to GET route and initializing product list and customer list.
         public AddOrderViewModel(CustomerDbContext context)
         {
             orderProductIDs = new List<int>();
+            // fetch product catalog
             Products = context.Products.ToList();
+            // fetch customer catalog
             Customers = context.Customers.ToList();
         }
 
@@ -56,6 +58,8 @@ namespace CustomerMVC.ViewModels
         public List<SelectListItem> getProductSelectList()
         {
             List<SelectListItem> returnList = new List<SelectListItem>();
+
+        // for each product in the product catalog, create a select-list item with a value of the product's id and a display text of the product's name
             foreach(Product product in Products)
             {
                 returnList.Add(new SelectListItem { Value = product.ID.ToString(), Text = product.name });
@@ -63,6 +67,7 @@ namespace CustomerMVC.ViewModels
             return returnList;
         }
 
+        // Same shmuz here
         public List<SelectListItem> getCustomerSelectList()
         {
             List<SelectListItem> returnList = new List<SelectListItem>();
@@ -88,11 +93,11 @@ namespace CustomerMVC.ViewModels
             {
                 addOrderProduct(productId, context);
             }
-            //use LINQ to select all order products where the orderID is indeed this order
+            // Use LINQ to select all order products where the orderID is indeed this order
             orderProducts = (List<OrderProduct>)(from oP in context.OrderProducts.ToList()
                             where oP.orderID == ID
                             select oP);
-
+            // Mmmm.. LINQ
         }
 
         // Add a single order product given a product ID.

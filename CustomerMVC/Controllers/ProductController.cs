@@ -17,15 +17,13 @@ namespace CustomerMVC.Controllers
             this.context = context;
         }
         
-        public IActionResult Index()
-        {
-            return View();
-        }
+        
         public IActionResult Add()
         {
             return View(new AddProductViewModel(context));
         }
 
+        // Pretty straightforward form submission handling
         [HttpPost]
         public IActionResult Add(AddProductViewModel addProductViewModel)
         {

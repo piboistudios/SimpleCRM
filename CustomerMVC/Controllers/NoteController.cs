@@ -14,16 +14,13 @@ namespace CustomerMVC.Controllers
     public class NoteController : Controller
     {
         private CustomerDbContext context;
+
         public NoteController(CustomerDbContext context)
         {
             this.context = context;
         }
         
         // GET: /<controller>/
-        public IActionResult Index()
-        {
-            return Redirect("/Note/Add");
-        }
         public IActionResult Add()
         {
             AddNoteViewModel addNoteViewModel = new AddNoteViewModel(context.Customers.ToList());

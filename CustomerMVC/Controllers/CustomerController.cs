@@ -14,27 +14,27 @@ namespace CustomerMVC.Controllers
     {
         private CustomerDbContext context;
 
+        // EFC will pass in a DbContext so that we have a context to access the database within the controller
         public CustomerController(CustomerDbContext context)
         {
             this.context = context;
         }
-        // GET: /<controller>/
-        public IActionResult Index()
-        {
-            return View();
-        }
 
+        // Go to add customer view, pass in a view model
         public IActionResult Add()
         {
             AddCustomerViewModel addCustomerViewModel = new AddCustomerViewModel();
             return View(addCustomerViewModel);
         }
 
+        // Route when customer view model is posted back.
         [HttpPost]
         public IActionResult Add(AddCustomerViewModel addCustomerViewModel)
         {
+            // ASP.NET Core Form validation stuffs
             if(ModelState.IsValid)
             {
+                // Copy the view model into a new customer model 
                 Customer newCustomer = new Customer
                 {
                     ID = addCustomerViewModel.ID,
@@ -45,14 +45,19 @@ namespace CustomerMVC.Controllers
                     address = addCustomerViewModel.address
                     
                 };
+
+                // Add the customer model to the database as a record
                 context.Customers.Add(newCustomer);
+                // Guess what it does
                 context.SaveChanges();
                 return Redirect("/");
 
             }
+            // If the model state is invalid redirect to the add customer page; try again
             return View();
         }
 
+        // Remove customer
         public IActionResult Remove()
         {
             ViewBag.title = "Remove Customer";
@@ -60,6 +65,7 @@ namespace CustomerMVC.Controllers
             return View();
         }
 
+        // Receive a list of customer ids and remove them from the database; save changes afterwards for obvious efficiency reasons
         [HttpPost]
         public IActionResult Remove(int[] customerIds)
         {

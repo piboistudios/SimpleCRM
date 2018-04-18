@@ -15,6 +15,7 @@ namespace CustomerMVC.Models
         public int productID { get; set; }
         public int quantity { get; set; }
 
+        // Initialize OrderProducts with a quantity of 1; makes sense
         public OrderProduct()
            
         {

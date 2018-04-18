@@ -1,7 +1,9 @@
 ﻿@using CustomerMVC.Data;
 @using System.Linq;
 @using System.Collections;
+@using CustomerMVC.Controllers;
 @{
+
     ViewData["Title"] = "ViewOrder";
 }
 
@@ -20,13 +22,12 @@
 }
 @if (ViewBag.orderID != null)
 {
-
+    // use the db context to get the order, then the customer, then the list of all order products
     CustomerDbContext context = ViewBag.context;
     int orderID = ViewBag.orderID;
     Order order = context.Orders.First(o => o.ID == orderID);
     Customer customer = context.Customers.First(c => c.ID == order.customerID);
     List<OrderProduct> orderProducts = context.OrderProducts.ToList();
-    Dictionary<Product, int> productMap = new Dictionary<Product, int>();
     <center>
 
         <h2>@customer.name</h2>
@@ -40,7 +41,6 @@
             <th>Base Price</th>
             <th>Total Price</th>
         </tr>
-        @{ double total = 0.0;}
         @foreach (OrderProduct orderProduct in from oP in orderProducts
                                               where oP.orderID == orderID
                                               select oP)
@@ -49,7 +49,7 @@
             Product product = context.Products.Single(p => p.ID == orderProduct.productID);
             Vendor vendor = context.Vendors.Single(v => v.ID == product.vendorID);
             double productTotal = Math.Round(product.basePrice * (1 + vendor.margin) * orderProduct.quantity, 2);
-            total += productTotal;
+            // Fetch the things
             <tr>
 
                 <td>@product.name</td>
@@ -68,7 +68,7 @@
             <td></td>
             <td></td>
             <td><b>Total:</b></td>
-            <td>@String.Format("{0:C2}", total)</td>
+            <td>@String.Format("{0:C2}", RelationalCalculations.getOrderTotal(context, orderID))</td>
         </tr>
 
     </table>
@@ -76,7 +76,15 @@
     {
         <a href="/OrderProduct/Add?orderID=@orderID">Add Item</a>
     }
-    <center><h2><a href="/Order/Submit?orderID=@orderID">Submit</a></h2></center>
+    <center>
+
+        <form asp-controller="Order" asp-action="Submit">
+            <input type="number" name="orderID" value="@orderID" hidden />
+            <h2><input type="submit" value="Submit order" /></h2>
+        </form>
+
+
+    </center>
 
 }
 

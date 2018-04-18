@@ -42,7 +42,7 @@ namespace CustomerMVC.ViewModels
             Vendors = context.Vendors.ToList();
         }
 
-        // Return list of Vendors as list of select list items
+        // Return list of Vendors as list of select-list items
 
         public List<SelectListItem> getVendorSelectList()
         {

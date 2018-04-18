@@ -16,6 +16,7 @@ namespace CustomerMVC.Models
         public List<Order> orders { get; set; }
         public List<Note> notes { get; set; }
 
+        // How broke are they?
         public bool canAfford(double amount)
         {
             return (creditLimit - currentBalance) >= amount;
