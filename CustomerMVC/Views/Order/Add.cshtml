@@ -1,0 +1,22 @@
+﻿@using CustomerMVC.ViewModels;
+@model AddOrderViewModel;
+@{
+    ViewData["Title"] = "AddOrder";
+}
+
+<h2>Add Order</h2>
+<form method="post" asp-controller="Order" asp-action="Add">
+    <div class="form-group">
+        <label asp-for="customerID"></label>
+        <select asp-for="customerID" asp-items="Model.getCustomerSelectList()"></select>
+        <span asp-validation-for="customerID"></span>
+
+    </div>
+    <div class="form-group">
+        <label asp-for="orderDate"></label>
+        <input asp-for="orderDate" />
+        <span asp-validation-for="orderDate"></span>
+    </div>
+    <input type="submit" value="Submit Order"/>
+</form>
+

@@ -1,0 +1,84 @@
+﻿@using CustomerMVC.Data;
+@using System.Linq;
+@using System.Collections;
+@{
+    ViewData["Title"] = "ViewOrder";
+}
+
+<h2>View Order No. @ViewBag.orderID</h2>
+@if (ViewBag.orderID == null)
+{
+    <form method="get" asp-controller="Order" asp-action="Detail">
+        <div class="form-group">
+            <label>Enter Order Number:</label>
+            <input type="number" name="orderID" />
+
+        </div>
+        <input type="submit" value="View Order" />
+    </form>
+
+}
+@if (ViewBag.orderID != null)
+{
+
+    CustomerDbContext context = ViewBag.context;
+    int orderID = ViewBag.orderID;
+    Order order = context.Orders.First(o => o.ID == orderID);
+    Customer customer = context.Customers.First(c => c.ID == order.customerID);
+    List<OrderProduct> orderProducts = context.OrderProducts.ToList();
+    Dictionary<Product, int> productMap = new Dictionary<Product, int>();
+    <center>
+
+        <h2>@customer.name</h2>
+        <h3>Status: @order.status.ToString()</h3>
+    </center>
+    <table class="table">
+        <tr>
+            <th>Product Name</th>
+            <th>Vendor</th>
+            <th>Quantity</th>
+            <th>Base Price</th>
+            <th>Total Price</th>
+        </tr>
+        @{ double total = 0.0;}
+        @foreach (OrderProduct orderProduct in from oP in orderProducts
+                                              where oP.orderID == orderID
+                                              select oP)
+        {
+
+            Product product = context.Products.Single(p => p.ID == orderProduct.productID);
+            Vendor vendor = context.Vendors.Single(v => v.ID == product.vendorID);
+            double productTotal = Math.Round(product.basePrice * (1 + vendor.margin) * orderProduct.quantity, 2);
+            total += productTotal;
+            <tr>
+
+                <td>@product.name</td>
+                <td>@vendor.name</td>
+                <td>@orderProduct.quantity</td>
+                <td>@String.Format("{0:C2}", product.basePrice)</td>
+                <td>@String.Format("{0:C2}", productTotal)</td>
+
+            </tr>
+
+
+
+        }
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><b>Total:</b></td>
+            <td>@String.Format("{0:C2}", total)</td>
+        </tr>
+
+    </table>
+    @if (order.status != Status.Completed)
+    {
+        <a href="/OrderProduct/Add?orderID=@orderID">Add Item</a>
+    }
+    <center><h2><a href="/Order/Submit?orderID=@orderID">Submit</a></h2></center>
+
+}
+
+
+

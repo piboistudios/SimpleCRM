@@ -1,0 +1,18 @@
+﻿@using CustomerMVC.Controllers;
+@{
+    ViewData["Title"] = "Submit";
+}
+
+<h2>Submit</h2>
+@if(ViewBag.OrderSubmissionError != null)
+{
+    OrderSubmissionErrorStatus status = ViewBag.OrderSubmissionError;
+    if (status == OrderSubmissionErrorStatus.InsufficientFunds)
+    {
+
+        <p class="danger">Customer has insufficient funds, please contact AR.</p>
+        <p class="info"><b>AR: (888) 888-8888</b></p>
+
+    }
+
+}

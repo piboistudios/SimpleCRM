@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Remove";
+}
+
+<h2>Remove</h2>
+<form method="post" controller="Customer" action="Remove">
+
+    @foreach(Customer c in ViewBag.customers)
+    {
+        <input type = "checkbox" name = "customerIds" id="@c.ID" value="@c.ID" />
+        <label asp-for="@c.ID">@c.name</label>
+        <br />
+
+    }
+    <input type="submit" value="Remove Customers" />
+</form>
+

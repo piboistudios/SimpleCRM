@@ -1,0 +1,22 @@
+﻿@using CustomerMVC.ViewModels;
+@model AddNoteViewModel;
+@{
+    ViewData["Title"] = "AddNote";
+}
+
+<h2>AddNote</h2>
+<form asp-controller="Note" asp-action="Add">
+    <div id="form-group">
+        <label asp-for="content"></label>
+        <input id = "form-control" asp-for="content" />
+        <span asp-validation-for="content"></span>
+
+    </div>
+    <div id="form-group">
+        <label asp-for="customerID"></label>
+        <select asp-for="customerID" asp-items="Model.Customers"></select>
+        <span asp-validation-for="customerID"></span>
+    </div>
+    <input type="submit" value="Add Note" />
+
+</form>
