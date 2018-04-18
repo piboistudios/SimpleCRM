@@ -266,3 +266,6 @@ appsettings.Development.json
 
 # Migrations
 */Migrations/*
+
+# IIS launch settings
+*/Properties/*
