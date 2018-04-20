@@ -7,6 +7,6 @@ Setting up an MVC project, copying in the models, view, view models, controllers
 
 For extra fun, download SSRS, set up a reporting server and tables and launch that as well, and bam. Simple bare-bones CRM with reporting capabilities.
 ## To Do
-- Add Employees
-- Add Reporting Controller
+- Add Employees and logins/permissions
+- Add Reporting MVC resources
 - Write some basic SSRS reports
