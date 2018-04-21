@@ -10,3 +10,5 @@ For extra fun, download SSRS, set up a reporting server and tables and launch th
 - Add Employees and logins/permissions
 - Add Reporting MVC resources
 - Write some basic SSRS reports
+
+[preview](https://ibb.co/icfz1n)
