@@ -31,7 +31,7 @@ namespace CustomerMVC.Controllers
         public IActionResult Add(AddOrderProductViewModel addOrderProductViewModel)
         {
             // Get the order from the db context
-            Order order = context.Orders.SingleOrDefault(o => o.ID == addOrderProductViewModel.ID);
+            Order order = context.Orders.SingleOrDefault(o => o.ID == addOrderProductViewModel.orderID);
 
             // Let ASP.NET validate the user input and make sure the order isn't invoiced
             if (ModelState.IsValid && order.status != Status.Completed)
