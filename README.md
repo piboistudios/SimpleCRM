@@ -11,4 +11,4 @@ For extra fun, download SSRS, set up a reporting server and tables and launch th
 - Add Reporting MVC resources
 - Write some basic SSRS reports
 
-[preview](https://ibb.co/icfz1n)
+![preview](https://image.ibb.co/koqME7/Simple_CRM.png)
