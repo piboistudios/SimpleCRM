@@ -1,0 +1,57 @@
+﻿@using CustomerMVC.ViewModels
+@using System.Linq
+@model ViewCoViewModel
+@{
+    ViewData["Title"] = "ViewCo";
+}
+
+<h2>ViewCo</h2>
+@if(Model.ID == -1 )
+{
+<form method="get" asp-controller="Propco" asp-action="ViewCo">
+    <div class="form-group">
+        <label>Which company?</label>
+        <select asp-for="ID" asp-items="Model.propcos"></select>
+        <input type="submit"value="Find company" />
+    </div>
+
+</form>
+
+}
+else
+{
+
+    Propco propco = Model.context.Propcos.SingleOrDefault(pCo => pCo.ID == Model.ID);
+    
+    List<Customer> customers = new List<Customer>();
+    foreach(PropcoCustomer propcoCustomer in from propcoCustomer in Model.context.propcoCustomers.ToList()
+                                             where propcoCustomer.propcoID == propco.ID
+                                             select propcoCustomer)
+    {
+        customers.Add(Model.context.Customers.SingleOrDefault(c => c.ID == propcoCustomer.customerID));
+
+    }
+ <h1>@propco.name</h1>
+ <h2>@propco.primaryContact</h2>
+<h3>@propco.address</h3>
+<table class="table">
+<tr>
+    <th>Account Number</th>
+    <th>Name</th>
+    <th>Location</th>
+    <th>Current Balance</th>
+    <th>Credit Limit</th>
+</tr>
+@foreach(Customer customer in customers)
+{
+    <tr>
+        <td>@customer.ID</td>
+        <td>@customer.name</td>
+        <td>@customer.address</td>
+        <td>@customer.currentBalance</td>
+        <td>@customer.creditLimit</td>
+    </tr>
+
+}
+</table>
+}

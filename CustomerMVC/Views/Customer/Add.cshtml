@@ -1,8 +1,5 @@
-﻿@using CustomerMVC.ViewModels;
-@model AddCustomerViewModel;
-@{
-    ViewData["Title"] = "Add";
-}
+﻿@using CustomerMVC.ViewModels
+@model AddCustomerViewModel
 
 <h2>Add</h2>
 <form method="post" asp-controller="Customer" asp-action="Add">
@@ -30,6 +27,11 @@
         <label asp-for="dateStarted"></label>
         <input class="form-control" asp-for="dateStarted" />
         <span asp-validation-for="dateStarted"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="propCoID"></label>
+        <select asp-for="propCoID" asp-items="Model.getPropcoSelectList()"></select>
+        <span asp-validation-for="propCoID"></span>
     </div>
     <input type="submit" value="Add Customer" />
 

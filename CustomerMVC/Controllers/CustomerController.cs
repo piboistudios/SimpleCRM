@@ -23,7 +23,7 @@ namespace CustomerMVC.Controllers
         // Go to add customer view, pass in a view model
         public IActionResult Add()
         {
-            AddCustomerViewModel addCustomerViewModel = new AddCustomerViewModel();
+            AddCustomerViewModel addCustomerViewModel = new AddCustomerViewModel(context);
             return View(addCustomerViewModel);
         }
 
@@ -45,11 +45,22 @@ namespace CustomerMVC.Controllers
                     address = addCustomerViewModel.address
                     
                 };
-
-                // Add the customer model to the database as a record
+                System.IO.File.WriteAllText("outtttttttttttttttt.txt", newCustomer.ID.ToString() + " , " + addCustomerViewModel.ID.ToString());
                 context.Customers.Add(newCustomer);
-                // Guess what it does
                 context.SaveChanges();
+                if(addCustomerViewModel.propCoID != -1)
+                {
+                    PropcoCustomer newPropcoCustomer = new PropcoCustomer
+                    {
+                        customerID = newCustomer.ID,
+                        propcoID = addCustomerViewModel.propCoID
+                    };
+                    context.propcoCustomers.Add(newPropcoCustomer);
+                    
+                }
+                context.SaveChanges();
+                // Add the customer model to the database as a record
+                // Guess what it does
                 return Redirect("/");
 
             }

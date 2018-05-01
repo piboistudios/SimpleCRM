@@ -1,0 +1,29 @@
+﻿@using CustomerMVC.ViewModels;
+@model AddPropcoViewModel
+@{
+    ViewData["Title"] = "Add";
+}
+
+<h2>Add</h2>
+
+<form method="post" asp-controller="Propco" asp-action="Add" >
+    <div class="form-group">
+        <label asp-for="name"></label>
+        <input asp-for="name" />
+        <span asp-validation-for="name"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="address"></label>
+        <input asp-for="address" />
+        <span asp-validation-for="address"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="primaryContact"></label>
+        <input asp-for="primaryContact" />
+        <span asp-validation-for="primaryContact"></span>
+    </div>
+
+    <input type="submit" value="Add Property Company" />
+</form>

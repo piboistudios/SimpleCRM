@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CustomerMVC.Data;
+using CustomerMVC.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -30,5 +33,29 @@ namespace CustomerMVC.ViewModels
         [Required]
         [Display(Name ="Address")]
         public string address { get; set; }
+
+        [Display(Name ="Property Company")]
+        public int propCoID { get; set; }
+        static List<Propco> Propcos;
+
+        public List<SelectListItem> getPropcoSelectList()
+        {
+            List<SelectListItem> returnList = new List<SelectListItem>();
+            foreach(Propco propco in Propcos)
+            {
+                returnList.Add(new SelectListItem { Text = propco.name, Value = propco.ID.ToString() });
+            }
+            return returnList;
+
+        }
+        public AddCustomerViewModel()
+        {
+
+        }
+        public AddCustomerViewModel(CustomerDbContext context)
+        {
+            Propcos = context.Propcos.ToList();
+        }
+
     }
 }

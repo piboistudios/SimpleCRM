@@ -16,10 +16,12 @@ namespace CustomerMVC.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
-  // The .NET EF commandline tools handle the process of matching tables and columns via migrations e.g. dotnet ef migrations add WeBrokeItWeFixedIt
+        public DbSet<PropcoCustomer> propcoCustomers { get; set; }
+        public DbSet<Propco> Propcos { get; set; }
+                                           // The .NET EF commandline tools handle the process of matching tables and columns via migrations e.g. dotnet ef migrations add WeBrokeItWeFixedIt
+                                           
 
 
-        
         public CustomerDbContext(DbContextOptions<CustomerDbContext> options)
             : base(options)
         {
@@ -32,6 +34,8 @@ namespace CustomerMVC.Data
 
             modelBuilder.Entity<OrderProduct>()
               .HasKey(oP => new { oP.orderID, oP.productID });
+            modelBuilder.Entity<PropcoCustomer>()
+                .HasKey(pCo => new { pCo.customerID, pCo.propcoID });
         }
     }
 }

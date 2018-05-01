@@ -12,10 +12,12 @@ namespace CustomerMVC.Models
         public DateTime dateStarted { get; set; }
         public string address { get; set; }
         public double creditLimit { get; set; }
+        public string owner { get; set; }
         public double currentBalance { get; set; }
         public List<Order> orders { get; set; }
         public List<Note> notes { get; set; }
 
+        
         // How broke are they?
         public bool canAfford(double amount)
         {
